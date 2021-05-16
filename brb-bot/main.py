@@ -7,8 +7,11 @@ from instapy import set_workspace
 
 set_workspace=('backup')
 
-session=InstaPy(username='roxlynstore',
-                password='jambangan1',
+insta_username=''
+insta_password=''
+
+session=InstaPy(insta_username,
+                insta_password,
                 headless_browser=True)
 
 with smart_run(session):
