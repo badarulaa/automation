@@ -1,11 +1,5 @@
-from contextlib import suppress
-from pathlib import WindowsPath
-from sys import path
 from instapy import InstaPy
 from instapy import smart_run
-from instapy import set_workspace
-
-set_workspace=('backup')
 
 insta_username=''
 insta_password=''
