@@ -1,19 +1,29 @@
+from contextlib import suppress
+from pathlib import WindowsPath
+from sys import path
 from instapy import InstaPy
 from instapy import smart_run
+from instapy import set_workspace
 
-insta_username=''
-insta_password=''
+import schedule
+import time
 
-session=InstaPy(insta_username,
-                insta_password,
-                headless_browser=True)
+set_workspace=('backup')
+
+insta_username = ''
+insta_password = ''
+
+session=InstaPy(username=insta_username,
+                password=insta_password,
+                headless_browser=True,
+                bypass_security_challenge_using='sms')
 
 with smart_run(session):
     session.set_relationship_bounds(enabled=True,
-                                    potency_ratio=2.5,
+                                    potency_ratio=None,
                                     delimit_by_numbers=True,
-                                    min_posts=10,
-                                    min_followers=100,
+                                    min_posts=5,
+                                    min_followers=50,
                                     min_following=50)
 
     session.set_skip_users(skip_private=True,
@@ -27,11 +37,18 @@ with smart_run(session):
                                 sleep_after=['likes','comments_d', 'follows'],
                                 stochastic_flow=True,
                                 notify_me=True,
-                                peak_likes_daily=100,
-                                peak_follows_daily=100,
-                                peak_comments_daily=100,
+                                peak_likes_daily=1000,
+                                peak_follows_daily=1000,
+                                peak_comments_daily=1000,
                                 peak_server_calls_daily=3600)
 
-    session.like_by_feed(amount=10, randomize=True, interact=True, unfollow=False)
-    session.like_by_tags(['tiktokindo','snackvideoindonesia'], amount=100, randomize=True)
-    session.follow_by_tags(['tiktokindo'], amount=100, randomize=True)
+    session.set_user_interact(amount=3, 
+                            percentage=75, 
+                            randomize=False, 
+                            media='Photo')
+
+    #session.like_by_feed(amount=10, randomize=True, interact=True, unfollow=False)
+    #session.like_by_tags(['tiktokindo', 'tiktokhot', 'tiktokindonesia'], amount=50, randomize=True)
+    session.follow_user_followers(['dagelan', 'crazyrichsurabayans', 'raffinagita1717'], amount=25, randomize=True, sleep_delay=300, interact=True)
+
+
